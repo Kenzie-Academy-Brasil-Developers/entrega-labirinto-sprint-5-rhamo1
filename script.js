@@ -16,143 +16,114 @@ const map = [
     "WWWWWWWWWWWWWWWWWWWWW",
 ];
 
+//html dom
+//mapear map
+
 //verificar a posicao do jogador 
 //classes wall e caminho
+//validar movimento
 
-let x = [0] 
-let y = [9] 
+//condicao vitoria
 
-let pTop = 180
-let pLeft = 0
-
-const move = (key) => {
-
-    if (key === "ArrowDown") {
-        if (map[x][returnSumArray(y)] === " ") {
-            y = returnSumArray(y)
-            pTop += 20
-            pxMove(pLeft, pTop)
-        }
-
-    }
-
-    if (key === "ArrowUp") {
-
-        if (map[x][returnSubArray(y)] === " ") {
-            y = returnSubArray(y)
-            pTop -= 20
-            pxMove(pLeft, pTop)
-
-        }
-
-    }
-
-    if (key === "ArrowRight") {
-        console.log(map[returnSumArray(x)][y])
-        if (map[returnSumArray(x)][y] === " ") {
-            x = returnSumArray(x)
-            pLeft += 20
-            pxMove(pLeft, pTop)
-            
-        }
-    }
-    
-    if (key === "ArrowLeft") {
-        if (map[returnSubArray(x)][y] === " ") {
-            x = returnSubArray(x)
-            pLeft -= 20
-            pxMove(pLeft, pTop)
-            
-        }
-    }
-    console.log(pTop, pLeft)
-    
-}
-
-const returnSumArray = arr =>{
-    let sumArray = []
-    for(let i = 0; i < arr.length; i++){
-        let num = arr[i]
-        sumArray.push(num + 1)
-    }
-    return sumArray
-}
-
-const returnSubArray = arr =>{
-    let subArray = []
-    for(let i = 0; i < arr.length; i++){
-        let num = arr[i]
-        subArray.push(num - 1)
-    }
-    return subArray
-}
-
-
-const mapMove = (x, y) => {
-
-    if (map[x][y] === " ") {
-        return true
-    }
-    if (map[x][y] === "W") {
-        return false
-    }
-}
-
-const pxMove = (x, y) => {
-    const player = document.getElementById('jogador')
-
-    player.style.left = `${x}px`
-    player.style.top = `${y}px`
-}
+let audio = new Audio('win.mp3')
 
 
 
-
-
+const player = document.createElement("div")
+player.classList.add("jogador")
+player.id = 'player'
 
 const jogo = () => {
 
     const labirinto = document.getElementById('labirinto')
 
-    map.forEach(linha => {
+    for (let i = 0; i < map.length; i++) {
+        let linhaDiv = document.createElement("div")
+        linhaDiv.classList.add("linha")
+        colunaMap = map[i]
 
-        const novaLinha = document.createElement('div')
-        novaLinha.classList.add('linha')
+        for (let j = 0; j < colunaMap.length; j++) {
+            let caixaDiv = document.createElement("div")
+            caixaDiv.classList.add("caixinha")
 
-        linha = linha.split('')
-
-        linha.forEach(letra => {
-            const novoBloco = document.createElement('div')
-            const novoJogador = document.createElement('div')
+            let caixaMap = colunaMap[j]
 
 
-            if (letra === 'W') {
-                novoBloco.classList.add('wall', 'caixinha')
+            caixaDiv.dataset.line = i
+            caixaDiv.dataset.col = j
+
+
+            if (caixaMap === " ") {
+                caixaDiv.classList.add('caminho')
+
+            } else if (caixaMap === 'W') {
+                caixaDiv.classList.add('wall')
+
+            } else if (caixaMap === 'S') {
+                caixaDiv.classList.add('start')
+                caixaDiv.classList.add('start')
+                caixaDiv.appendChild(player);
+
+            } else if (caixaMap === 'F') {
+                caixaDiv.id = "end"
+                caixaDiv.classList.add("finish")
             }
-            else if (letra === 'S') {
-                novoBloco.classList.add('start', 'caixinha')
-                novoJogador.id = 'jogador'
-                novoJogador.classList.add('labirinto')
-            }
-            else if (letra === 'F') {
-                novoBloco.classList.add('finish', 'caixinha')
-            }
-            else {
-                novoBloco.classList.add('caminho', 'caixinha')
-            }
-            novaLinha.appendChild(novoBloco)
-            novaLinha.appendChild(novoJogador)
-        })
-        labirinto.appendChild(novaLinha)
-    })
+            caixaDiv.append(caixaMap);
 
+            linhaDiv.appendChild(caixaDiv)
+        }
+        labirinto.appendChild(linhaDiv)
+    }
+   
 
 }
 
+function moves(event) {
+    const tecla = event.key;
+    let linhaAtual = Number(player.parentElement.getAttribute('data-line'));
+    let colunaAtual = Number(player.parentElement.getAttribute('data-col'));
+    let moveNext;
+
+    if (tecla === 'ArrowUp') {
+        moveNext = labirinto.children[linhaAtual - 1].children[colunaAtual];
+
+        if (moveNext.classList.contains('caminho')) {
+            moveNext.appendChild(player)
+        }
+    } else if (tecla === 'ArrowDown') {
+        moveNext = labirinto.children[linhaAtual + 1].children[colunaAtual];
+
+        if (moveNext.classList.contains('caminho')) {
+            moveNext.appendChild(player)
+        }
+    }
+
+    if (tecla === 'ArrowLeft') {
+        moveNext = labirinto.children[linhaAtual].children[colunaAtual - 1]
+
+        if (moveNext.classList.contains('caminho')) {
+            moveNext.appendChild(player)
+        }
+    } else if (tecla === 'ArrowRight') {
+        moveNext = labirinto.children[linhaAtual].children[colunaAtual + 1];
+
+        if (moveNext.classList.contains('caminho')) {
+            moveNext.appendChild(player)
+        }
+    }
+
+    vitoria(moveNext)
+}
+
+const vitoria = (ultimo) => {
+    if(ultimo.id === 'end'){
+        audio.play()
+        alert('Você venceu!!')
+    }
+}
+
 document.addEventListener('keydown', (event) => {
-    let keyName = event.key;
+    moves(event)
 
-    move(keyName)
-
-});
+})
 jogo()

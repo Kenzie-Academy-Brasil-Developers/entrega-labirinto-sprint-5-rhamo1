@@ -1,41 +1,60 @@
+body{
+    background-color: #dfe6e9;
+}
+
+h1 {
+    text-align: center;
+}
+
 #labirinto {
     display: flex;
     flex-direction: column;
-    position: relative;
+    align-items: center;
 }
 
 .caixinha {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.linha{
+.linha {
     display: flex;
 }
 
 .wall {
 
     background-color: rgb(27, 90, 90);
+    background-image: url('./muromario.png');
+    background-size: cover;
 }
 
 .caminho {
 
     background-color: antiquewhite;
+    background-image: url('./grama.jpg');
+    background-size: contain;
 }
 
 .start {
 
     background-color: red;
+    background-image: url('./pipe.png');
+    background-size: cover;
 }
 
 .finish {
 
     background-color: blue;
+    background-image: url('./pipe.png');
+    background-size: cover;
 }
 
-#jogador{
-    width: 20px;
-    height: 20px;
-    background-image: url('./pog.gif');
-    position: absolute;
+.jogador {
+    width: 30px;
+    height: 30px;
+    background-image: url('./mario.gif');
+    background-size: contain;
 }
