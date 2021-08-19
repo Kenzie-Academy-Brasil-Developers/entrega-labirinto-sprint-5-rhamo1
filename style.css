@@ -27,34 +27,34 @@ h1 {
 .wall {
 
     background-color: rgb(27, 90, 90);
-    background-image: url('./muromario.png');
+    background-image: url('./assets/muromario.png');
     background-size: cover;
 }
 
 .caminho {
 
     background-color: antiquewhite;
-    background-image: url('./grama.jpg');
+    background-image: url('./assets/grama.jpg');
     background-size: contain;
 }
 
 .start {
 
     background-color: red;
-    background-image: url('./pipe.png');
+    background-image: url('./assets/pipe.png');
     background-size: cover;
 }
 
 .finish {
 
     background-color: blue;
-    background-image: url('./pipe.png');
+    background-image: url('./assets/pipe.png');
     background-size: cover;
 }
 
 .jogador {
     width: 30px;
     height: 30px;
-    background-image: url('./mario.gif');
+    background-image: url('./assets/mario.gif');
     background-size: contain;
 }

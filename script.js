@@ -25,7 +25,7 @@ const map = [
 
 //condicao vitoria
 
-let audio = new Audio('win.mp3')
+let audio = new Audio('./assets/win.mp3')
 
 
 
