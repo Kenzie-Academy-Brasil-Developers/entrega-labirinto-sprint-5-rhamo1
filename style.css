@@ -1,0 +1,41 @@
+#labirinto {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.caixinha {
+    width: 20px;
+    height: 20px;
+}
+
+.linha{
+    display: flex;
+}
+
+.wall {
+
+    background-color: rgb(27, 90, 90);
+}
+
+.caminho {
+
+    background-color: antiquewhite;
+}
+
+.start {
+
+    background-color: red;
+}
+
+.finish {
+
+    background-color: blue;
+}
+
+#jogador{
+    width: 20px;
+    height: 20px;
+    background-image: url('./pog.gif');
+    position: absolute;
+}
